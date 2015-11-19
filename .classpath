@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="C:/Users/Brandon/Documents/javagaming/graphicslib3D/graphicslib3D.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Brandon/Documents/javagaming/jbullet/jbullet.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Brandon/Documents/javagaming/jinput/jinput.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Brandon/Documents/javagaming/jogl/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Brandon/Documents/javagaming/jogl/jogl-all.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Brandon/Documents/javagaming/sage/sage.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Brandon/Documents/javagaming/vecmath/vecmath.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
