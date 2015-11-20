@@ -747,7 +747,7 @@ public void createGameObjects()
 	//addGameWorldObject(arrow);
 	sphere = new MySphere();		
 	Matrix3D translate = sphere.getLocalTranslation();
-	translate.translate(15,1,-5);
+	translate.translate(15,2,-5);
 	sphere.setLocalTranslation(translate);
 	sphere.scale(5,5,5);
 	sphere.updateLocalBound();

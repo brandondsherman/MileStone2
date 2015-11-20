@@ -81,7 +81,7 @@ public class PhysicsBase {
 		
 		CollisionShape fallShape = new SphereShape(1);
 		myTransform = new Transform();
-		myTransform.origin.set(new Vector3f(15,1,-5));
+		myTransform.origin.set(new Vector3f(15,2,-5));
 		myTransform.setRotation(new Quat4f(0,0,0,1));
 		
 		DefaultMotionState fallMotionState = new DefaultMotionState(myTransform);
@@ -102,7 +102,7 @@ public class PhysicsBase {
 		 { physicsWorld.stepSimulation(1.0f / 60.0f, 8); // 1/60th sec, 8 steps
 
 		 
-		 
+		 //float x2 = playerLoc
 		 
 		 Transform pBallTransform = new Transform();
 		 physicsBall.getMotionState().getWorldTransform(pBallTransform);
@@ -113,6 +113,10 @@ public class PhysicsBase {
 		 graphicalBall.setLocalTranslation(gBallXform);
 		 }else{
 			 playerLoc = player.getLocalTranslation().getCol(3);
+			 double x2 = playerLoc.getX();
+			 double y2 = playerLoc.getY();
+			 double z2 = playerLoc.getZ();
+			 
 		 }
 	}
 	
