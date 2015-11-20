@@ -34,6 +34,7 @@ import sage.terrain.HillHeightMap;
 import sage.terrain.TerrainBlock;
 import sage.texture.Texture;
 import sage.texture.TextureManager;
+import scriptManagers.ScriptManager;
 import sage.scene.Group;
 import sage.scene.HUDString;
 import graphicslib3D.Matrix3D;
@@ -41,6 +42,9 @@ import graphicslib3D.Point3D;
 import graphicslib3D.Vector3D;
 import net.java.games.input.Controller;
 import net.java.games.input.Keyboard;
+import physics.PhysicsBase;
+import physics.StartPhysics;
+
 import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -62,6 +66,7 @@ import javax.swing.JOptionPane;
 import m2.Camera3P;
 import gameWorldObjects.GhostAvatar;
 import gameWorldObjects.MyCube;
+import gameWorldObjects.MySphere;
 import gameWorldObjects.TerrainManager;
 import gameWorldObjects.models.Arrow;
 import keyboardMovement.*;
@@ -190,6 +195,10 @@ private boolean isPressed;
 private Object mousePrevLocation;
 private int mousePrevX;
 private int mousePrevY;
+private PhysicsBase physicsBase;
+private MySphere sphere;
+
+public static ArrayList<ScriptManager> scriptManagers = new ArrayList<ScriptManager>();
 
 
 
@@ -440,7 +449,7 @@ protected void initGame()
 	
 	display.addMouseListener(this);
 	display.addMouseMotionListener(this);
-		
+	
 	cc1.update(0);
 	
 }
@@ -528,7 +537,9 @@ public void setUpController()
 		MoveRightLeftAction3P moveRightLeft3P = new MoveRightLeftAction3P(this);
 		MoveRYAxisAction3P moveRYAxis3P = new MoveRYAxisAction3P(this);
 		
-
+		//physics
+		physicsBase = new PhysicsBase(player1, sphere);
+		StartPhysics startPhysics = new StartPhysics(physicsBase);
 		
 		
 		for(int i=0;i<controllers.size(); i++)
@@ -546,7 +557,7 @@ public void setUpController()
 				im.associateAction(controllers.get(i), net.java.games.input.Component.Identifier.Key.ESCAPE, endGame, IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
 				im.associateAction(controllers.get(i), net.java.games.input.Component.Identifier.Key.R, orbitZoomIn, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
 				im.associateAction(controllers.get(i), net.java.games.input.Component.Identifier.Key.E, orbitZoomOut, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
-
+				im.associateAction(controllers.get(i), net.java.games.input.Component.Identifier.Key.SPACE,startPhysics,IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
 				
 			}
 			if(s.equals("Gamepad"))
@@ -598,6 +609,9 @@ public void update(float elapsedTimeMS)
 {
 	if(dynamicScriptOn)
 	{
+		for(ScriptManager sm : scriptManagers){
+			sm.executeDynamicScripts();
+		}
 		long modTime = dynamicScript.lastModified();
 		
 		if(modTime>fileLastModifiedTime)
@@ -666,6 +680,8 @@ public void update(float elapsedTimeMS)
 	
 	cc1.update(elapsedTimeMS);
 	
+	physicsBase.update(elapsedTimeMS);
+	
 }
 
 public void updateDisplay(float elapsedTimeMS)
@@ -727,9 +743,16 @@ public void createGameObjects()
 	createGrid();
 	createGroundPlane();
 	createTransparentGround();
-	SceneNode arrow = (SceneNode)new Arrow().getObj();
-	addGameWorldObject(arrow);
-
+	//SceneNode arrow = (SceneNode)new Arrow().getObj();
+	//addGameWorldObject(arrow);
+	sphere = new MySphere();		
+	Matrix3D translate = sphere.getLocalTranslation();
+	translate.translate(15,2,-5);
+	sphere.setLocalTranslation(translate);
+	sphere.scale(5,5,5);
+	sphere.updateLocalBound();
+	sphere.updateGeometricState(0, true);
+	addGameWorldObject(sphere);
 }
 
 public void createGhostAvatar(UUID ghostID, String[] pos, String[] cameraPos, String[] cameraRot1, String[] cameraRot2)

@@ -16,6 +16,7 @@ public class SceneNodeScriptManager extends ScriptManager{
 		engine = factory.getEngineByName("js");
 		engine.put("game", game);
 		makeDynamic=false;
+		MyGame.scriptManagers.add(this);
 	}
 	
 	public SceneNodeScriptManager getInstance(String folderLoc, MyGame game){
