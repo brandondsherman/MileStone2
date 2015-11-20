@@ -9,6 +9,7 @@ import javax.script.ScriptException;
 
 import gameWorldObjects.TerrainManager;
 import m2.Camera3P;
+import m2.MyGame;
 import scripts.Script;
 
 public class TerrainScriptManager extends ScriptManager{
@@ -24,6 +25,7 @@ public class TerrainScriptManager extends ScriptManager{
 		engine.put("terrMan", terrMan);
 		engine.put("scriptMan",this);
 		makeDynamic = false;
+		MyGame.scriptManagers.add(this);
 	}
 	
 	public static TerrainScriptManager getInstance(String folderLoc, TerrainManager terrMan){
@@ -46,6 +48,7 @@ public class TerrainScriptManager extends ScriptManager{
 
 	public void executeScript(String name) {
 		try {
+			makeDynamic = false;
 			FileReader fileReader = new FileReader(folderLoc+name);
 			engine.eval(fileReader);
 			fileReader.close();

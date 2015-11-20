@@ -3,6 +3,7 @@ package scriptManagers;
 import javax.script.ScriptEngineManager;
 
 import m2.Camera3P;
+import m2.MyGame;
 
 public class CameraScriptManager extends ScriptManager{
 
@@ -16,7 +17,7 @@ public class CameraScriptManager extends ScriptManager{
 		engine = factory.getEngineByName("js");
 		engine.put("camCont", camCont);
 		makeDynamic = false;
-		executeInitScripts();
+		MyGame.scriptManagers.add(this);
 	}
 	
 	public CameraScriptManager getInstance(String folderLoc, Camera3P camCont){
@@ -34,18 +35,7 @@ public class CameraScriptManager extends ScriptManager{
 		 */
 	}
 
-	protected void executeInitScripts() {
-		//find init folder
-		/*for(Script s : init folder){
-			executeScript(s);
-			if(makeDynamic){
-				addToDynamicList(s);
-			}
-			makeDynamic=false;
-		}
-		
-		*/
-	}
+
 
 	public void executeScript(String name) {
 
